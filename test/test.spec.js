@@ -45,4 +45,16 @@ describe('Normalized JSON', () => {
   it('Should convert `{"a":{"c":3}}`', () => {
       should(normalizedJSON({a: {b: 2, c: 3}}, {a:{c:true}})).be.equal('{"a":{"c":3}}');
   });
+  
+  it('Should convert `undefined` as empty string', () => {
+      should(normalizedJSON(undefined)).be.equal(undefined);
+  });
+  
+  it('Should convert `{a:undefined}` as empty object', () => {
+      should(normalizedJSON({a:undefined})).be.equal('{}');
+  });
+  
+  it('Should convert `[undefined, undefined]` as array of nulls', () => {
+      should(normalizedJSON([undefined, undefined])).be.equal('[null,null]');
+  });
 });

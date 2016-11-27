@@ -1,6 +1,10 @@
 'use strict';
 
 function normalizedJSON(target, scheme) {
+    if (typeof target === 'undefined') {
+        return target;
+    }
+    
     if (typeof target !== 'object' || target === null) {
         return JSON.stringify(target);
     }
@@ -8,6 +12,9 @@ function normalizedJSON(target, scheme) {
     if (Array.isArray(target)) {
         let result = [];
         target.forEach((value) => {
+            if (typeof value === 'undefined') {
+                value = null;
+            }
             result.push(normalizedJSON(value, scheme));
         });
         return '[' + result.join(',') + ']';
@@ -20,7 +27,11 @@ function normalizedJSON(target, scheme) {
         let result = [];
         scheme.forEach((prop) => {
             if (target.hasOwnProperty(prop)) {
-                result.push(JSON.stringify(prop) + ':' + normalizedJSON(target[prop]))
+                let value = target[prop];
+                if (typeof value === 'undefined') {
+                    return;
+                }
+                result.push(JSON.stringify(prop) + ':' + normalizedJSON(value))
             }
         });
         
@@ -30,7 +41,12 @@ function normalizedJSON(target, scheme) {
         let result = [];
         Object.getOwnPropertyNames(scheme).forEach((prop) => {
             if (target.hasOwnProperty(prop)) {
-                result.push(JSON.stringify(prop) + ':' + normalizedJSON(target[prop], scheme[prop]))
+                let value = target[prop];
+                if (typeof value === 'undefined') {
+                    return;
+                }
+                
+                result.push(JSON.stringify(prop) + ':' + normalizedJSON(value, scheme[prop]))
             }
         });
         
@@ -39,7 +55,11 @@ function normalizedJSON(target, scheme) {
     else {
         let result = [];
         Object.getOwnPropertyNames(target).sort().forEach((prop) => {
-            result.push(JSON.stringify(prop) + ':' + JSON.stringify(target[prop]))
+            let value = target[prop];
+            if (typeof value === 'undefined') {
+                return;
+            }
+            result.push(JSON.stringify(prop) + ':' + JSON.stringify(value))
         });
         
         return '{' + result.join(',') + '}';
