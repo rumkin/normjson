@@ -4,11 +4,11 @@ function normalizedJSON(target, scheme) {
     if (typeof target === 'undefined') {
         return target;
     }
-    
+
     if (typeof target !== 'object' || target === null) {
         return JSON.stringify(target);
     }
-    
+
     if (Array.isArray(target)) {
         let result = [];
         target.forEach((value) => {
@@ -19,7 +19,7 @@ function normalizedJSON(target, scheme) {
         });
         return '[' + result.join(',') + ']';
     }
-    
+
     if (typeof scheme === 'function') {
         return normalizedJSON(target, scheme(target));
     }
@@ -31,10 +31,10 @@ function normalizedJSON(target, scheme) {
                 if (typeof value === 'undefined') {
                     return;
                 }
-                result.push(JSON.stringify(prop) + ':' + normalizedJSON(value))
+                result.push(JSON.stringify(prop) + ':' + normalizedJSON(value));
             }
         });
-        
+
         return '{' + result.join(',') + '}';
     }
     else if (typeof scheme === 'object') {
@@ -45,11 +45,11 @@ function normalizedJSON(target, scheme) {
                 if (typeof value === 'undefined') {
                     return;
                 }
-                
-                result.push(JSON.stringify(prop) + ':' + normalizedJSON(value, scheme[prop]))
+
+                result.push(JSON.stringify(prop) + ':' + normalizedJSON(value, scheme[prop]));
             }
         });
-        
+
         return '{' + result.join(',') + '}';
     }
     else {
@@ -59,9 +59,10 @@ function normalizedJSON(target, scheme) {
             if (typeof value === 'undefined') {
                 return;
             }
-            result.push(JSON.stringify(prop) + ':' + JSON.stringify(value))
+
+            result.push(JSON.stringify(prop) + ':' + normalizedJSON(value));
         });
-        
+
         return '{' + result.join(',') + '}';
     }
 }
