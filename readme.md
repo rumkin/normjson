@@ -2,9 +2,8 @@
 
 ![Travis CI](https://img.shields.io/travis/rumkin/normjson.png)
 
-Convert JS values into JSON with key sorting. It can sort keys in ascending
-order or according to scheme. It useful for hash algorithms to generate
-deterministic JSON in different js environments.
+Convert JS values into deterministic JSON. It can sort keys in ascending
+order or according to scheme. Normjson is useful for hash algorithms to generate the same hashsum in different js environments.
 
 ## Installation
 
@@ -43,7 +42,7 @@ normjson(object1) === normjson(object2); // => true
 If no scheme specified then properties sorting by name in ascending order:
 
 ```javascript
-normjson({a:1, b:2, c: 3});
+normjson({c: 3, a:1, b:2});
 ```
 
 Coverts to:
