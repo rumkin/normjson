@@ -8,4 +8,5 @@ coverage
 
 tmp
 local
-build
+/build
+/dist
