@@ -73,4 +73,12 @@ describe('Normalized JSON', () => {
     it('Should convert `[undefined, undefined]` as array of nulls', () => {
         should(normalizedJSON([undefined, undefined])).be.equal('[null,null]');
     });
+
+    it('Should convert date `new Date(0)` to "1970-01-01T00:00:00.000Z"', () => {
+        should(normalizedJSON(new Date(0))).be.equal('"1970-01-01T00:00:00.000Z"');
+    });
+
+    it('Should convert date `{a: []}` to `{"a":[]}`', () => {
+        should(normalizedJSON({a:[]})).be.equal('{"a":[]}');
+    });
 });

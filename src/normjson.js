@@ -24,6 +24,9 @@ function normalizedJSON(target, scheme) {
     if (typeof scheme === 'function') {
         return normalizedJSON(target, scheme(target));
     }
+    else if (target.constructor !== Object) {
+        return normalizedJSON(target.toJSON());
+    }
     else {
         return '{' + getProps(target, scheme).join(',') + '}';
     }
